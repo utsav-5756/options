@@ -35,7 +35,8 @@ with col4:
     hysa_rate = st.number_input("HYSA %", min_value=0.0, value=DEFAULT_HYSA)
 
 with col5:
-    refresh_sec = st.number_input("Refresh (sec)", min_value=5, value=DEFAULT_REFRESH_SEC)
+    # refresh_sec = st.number_input("Refresh (sec)", min_value=5, value=DEFAULT_REFRESH_SEC)
+    refresh_clicked = st.button("🔄 Refresh")
 
 with col6:
     strike_container = st.container()
@@ -43,7 +44,7 @@ with col6:
 # -----------------------------
 # MAIN
 # -----------------------------
-if ticker_input:
+if ticker_input and refresh_clicked:
 
     ticker = get_ticker(ticker_input.upper())
 
@@ -108,8 +109,8 @@ if ticker_input:
         st.divider()
         render_table(df)
 
-        time.sleep(refresh_sec)
-        st.rerun()
+        # time.sleep(refresh_sec)
+        # st.rerun()
 
     except Exception as e:
         st.error(f"Error: {e}")

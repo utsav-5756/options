@@ -2,6 +2,10 @@ import pandas as pd
 import numpy as np
 
 def build_options_df(ticker, expirations, strategy, max_dte):
+
+    # 🔥 LIMIT EXPIRATIONS (CRITICAL)
+    expirations = expirations[:8]
+
     all_data = []
 
     for exp in expirations:
@@ -10,7 +14,9 @@ def build_options_df(ticker, expirations, strategy, max_dte):
         if dte <= 0 or dte > max_dte:
             continue
 
-        opt = ticker.option_chain(exp)
+        # 🔥 USE CACHED FUNCTION
+        opt = get_option_chain(ticker.ticker, exp)
+
         df_opt = opt.calls if strategy == "Covered Call" else opt.puts
 
         df_opt = df_opt.copy()
